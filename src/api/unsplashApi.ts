@@ -29,7 +29,7 @@ export default async function getPhotos<DataType>(
     page,
   };
 
-   const {data} = await axios.get(URL, { params });
+   const response = await axios.get(URL, { params });
   
-  return data;
+  return response.data;
 }
