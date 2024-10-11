@@ -17,10 +17,24 @@ import axios from "axios";
 
 
   
-export default async function getPhotos<DataType>(
+interface UnsplashPhoto {
+  id: string;
+  urls: {
+    regular: string;
+  };
+  alt_description: string;
+  likes: number;
+}
+
+interface UnsplashResponse {
+  results: UnsplashPhoto[];
+  total: number;
+}
+
+export default async function getPhotos(
   value: string,
   page: number = 1
-): Promise<DataType> {
+): Promise<UnsplashResponse> {
   const URL = "https://api.unsplash.com/search/photos";
   const params = {
     client_id: "gYm4Dxwc7b-JoAs3zqmAzS9m3OrZWI0I4DA_4P8nSxE",
@@ -29,7 +43,6 @@ export default async function getPhotos<DataType>(
     page,
   };
 
-   const response = await axios.get(URL, { params });
-  
-  return response.data;
+  const { data } = await axios.get<UnsplashResponse>(URL, { params });
+  return data;
 }
